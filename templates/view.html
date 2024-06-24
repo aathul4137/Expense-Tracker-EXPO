@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Analysis with Savings</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'javascript/style.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM6tvc4nNNKyn9j2CZzQDFzN+pyKg/s7iwH+4xF"
+    crossorigin="anonymous"
+  />
+  <!-- MDB CSS (optional, if you are using MDB) -->
+  <link
+    rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"/>
+    
+
+    
+</head>
+
+<body>
+    <center>
+        <nav class="navbar navbar-expand-lg bg-body-dark" style="background-color: #e5eea3">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand mb-0 h1" href="#expo">EXPO</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="#expo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
+                                <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                         
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#expo">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#expenseForm">Add Items</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#generate-chart">Chart</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#contact">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link disabled" aria-disabled="true">Data</a>
+                  </li>
+              </ul>
+  
+              <!-- Logout Link/Button -->
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                  </li>
+              </ul>
+  
+              <!-- Search Form -->
+              <form class="d-flex mx-2">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+          </div>
+      </div>
+  </nav>
+              </div>
+            </div>
+          </nav>
+          <br>
+        <h1 id="expo"><B>EXPO</B></h1>
+        <h6>Expense Analysis with Savings</h6>
+        <img src="{% static 'img/expense.jpg' %}" alt="logo" width="223" height="149"><br>
+    
+        <form id="expenseForm">
+          <label for="expenseName">Expense:</label>
+          <input type="text" id="expenseName" name="expenseName" required>
+          <label for="expenseAmount">Amount:</label>
+          <input type="number" id="expenseAmount" name="expenseAmount" required>
+          <button type="submit">Add Expense</button>
+      </form>
+
+      <form id="incomeForm">
+          <label for="incomeAmount">Income:</label>
+          <input type="number" id="incomeAmount" name="incomeAmount" required>
+          <button type="submit">Set Income</button>
+      </form>
+
+      <div id="totals">
+          <p>Total Expenses: <span id="totalExpenses">$0.00</span></p>
+          <p>Savings: <span id="savingsValue">$0.00</span></p>
+      </div>
+
+      <table id="expenseTable">
+          <thead>
+              <tr>
+                  <th>Expense</th>
+                  <th>Amount</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Expense items will be added here -->
+          </tbody>
+      </table>
+
+      <canvas id="expenseChart" width="100" height="100"></canvas>
+      <button id="generate-chart">Generate Chart</button>
+  </center>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+      let expenses = [];
+      let income = 0;
+
+      // Function to calculate total expense
+      function calculateTotalExpense() {
+          let total = 0;
+          expenses.forEach(expense => {
+              total += expense.amount;
+          });
+          return total;
+      }
+
+      // Function to update savings and total expenses display
+      function updateTotals() {
+          const totalExpense = calculateTotalExpense();
+          const savings = income - totalExpense;
+
+          // Update total expenses display
+          document.getElementById('totalExpenses').textContent = `$${totalExpense.toFixed(2)}`;
+
+          // Update savings display
+          document.getElementById('savingsValue').textContent = `$${savings.toFixed(2)}`;
+      }
+
+      // Event listener for expense form submission
+      document.getElementById('expenseForm').addEventListener('submit', function (event) {
+          event.preventDefault();
+          const expenseName = document.getElementById('expenseName').value;
+          const expenseAmount = parseFloat(document.getElementById('expenseAmount').value);
+          const expenseId = Date.now(); // Unique ID for each expense
+          expenses.push({ id: expenseId, name: expenseName, amount: expenseAmount });
+          addExpenseToTable(expenseId, expenseName, expenseAmount);
+          updateTotals();
+          this.reset();
+      });
+
+      // Event listener for income form submission
+      document.getElementById('incomeForm').addEventListener('submit', function (event) {
+          event.preventDefault();
+          income = parseFloat(document.getElementById('incomeAmount').value);
+          updateTotals();
+          this.reset();
+      });
+
+      // Function to add expense to table
+      function addExpenseToTable(id, name, amount) {
+          const tbody = document.querySelector('#expenseTable tbody');
+          const row = document.createElement('tr');
+          row.setAttribute('data-id', id);
+          row.innerHTML = `<td>${name}</td><td>$${amount.toFixed(2)}</td>
+                          <td>
+                              <button onclick="editExpense(${id})">Edit</button>
+                              <button onclick="deleteExpense(${id})">Delete</button>
+                          </td>`;
+          tbody.appendChild(row);
+      }
+
+      // Function to delete expense
+      function deleteExpense(id) {
+          expenses = expenses.filter(expense => expense.id !== id);
+          const row = document.querySelector(`#expenseTable tr[data-id='${id}']`);
+          row.remove();
+          updateTotals();
+      }
+
+      // Function to edit expense
+      function editExpense(id) {
+          const expense = expenses.find(expense => expense.id === id);
+          if (expense) {
+              document.getElementById('expenseName').value = expense.name;
+              document.getElementById('expenseAmount').value = expense.amount;
+              deleteExpense(id);
+          }
+      }
+
+      // Function to generate bar chart
+      function generateBarChart() {
+          if (expenses.length === 0) {
+              console.error('Expense list is empty.');
+              return;
+          }
+
+          const categoryTotals = {};
+          expenses.forEach((expense) => {
+              const category = expense.name;
+              const amount = expense.amount;
+              if (categoryTotals[category]) {
+                  categoryTotals[category] += amount;
+              } else {
+                  categoryTotals[category] = amount;
+              }
+          });
+
+          const categories = Object.keys(categoryTotals);
+          const amounts = Object.values(categoryTotals);
+
+          const ctx = document.getElementById('expenseChart').getContext('2d');
+
+          // Check if chart instance already exists and destroy it
+          if (window.expenseChart instanceof Chart) {
+              window.expenseChart.destroy();
+          }
+
+            window.expenseChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Amount Spent ($)',
+                        data: amounts,
+                        backgroundColor: categories.map(() => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`),
+                        borderColor: categories.map(() => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: $${value.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount Spent ($)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Expense Categories'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listener for generate chart button
+        document.getElementById('generate-chart').addEventListener('click', generateBarChart);
+
+        // Initial totals update
+        updateTotals();
+    </script>
+    
+        <footer class="bg-dark text-center text-white">
+            <div class="container p-4 pb-0">
+                <section class="mb-4">
+                    <!-- Social media icons -->
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee;" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39;" href="#!" role="button"><i class="fab fa-google"></i></a>
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac;" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca;" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-primary btn-floating m-1" style="background-color: #333333;" href="#!" role="button"><i class="fab fa-github"></i></a>
+                </section>
+            </div>
+    
+            <div id="contact" class="text-center p-3" style="background-color: rgba(235, 74, 77, 0.2);">
+                © 2024 All Rights Reserved:
+                <a class="text-white" href="#">EXPO.com</a>
+            </div>
+        </footer>
+    
+       
+    
+</body>
+
+</html>
